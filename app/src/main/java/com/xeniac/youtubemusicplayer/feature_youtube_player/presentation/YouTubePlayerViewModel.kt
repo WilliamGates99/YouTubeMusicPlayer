@@ -16,23 +16,35 @@ class YouTubePlayerViewModel @Inject constructor() : ViewModel() {
     val youTubePlayerState = _youTubePlayerState.asStateFlow()
 
     init {
-        updateYouTubeVideoId(videoId = "jfKfPfyJRdk")
+        updateYouTubeVideoId(
+            videoId = "jfKfPfyJRdk",
+            videoTitle = "lofi hip hop radio \uD83D\uDCDA beats to relax/study to",
+            channelName = "Lofi Girl"
+        )
     }
 
-    fun updateYouTubeVideoId(videoId: String) {
+    fun updateYouTubeVideoId(
+        videoId: String,
+        videoTitle: String,
+        channelName: String
+    ) {
         _youTubePlayerState.update {
-            it.copy(youTubeVideoId = videoId)
+            it.copy(
+                youtubeVideoId = videoId,
+                videoTitle = videoTitle,
+                channelName = channelName
+            )
         }
     }
 
     fun initializeYouTubePlayer(player: YouTubePlayer) {
         _youTubePlayerState.update {
-            it.copy(youTubePlayer = player)
+            it.copy(youtubePlayer = player)
         }
 
         youTubePlayerState.value.apply {
-            youTubeVideoId?.let { videoId ->
-                youTubePlayer?.cueVideo(
+            youtubeVideoId?.let { videoId ->
+                youtubePlayer?.cueVideo(
                     videoId = videoId,
                     startSeconds = 0f
                 )

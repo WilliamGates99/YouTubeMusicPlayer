@@ -19,7 +19,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.xeniac.youtubemusicplayer.feature_youtube_player.presentation.components.ErrorMessage
 import com.xeniac.youtubemusicplayer.feature_youtube_player.presentation.components.MediaControlButton
 import com.xeniac.youtubemusicplayer.feature_youtube_player.presentation.components.YoutubePlayerAndroidView
-import com.xeniac.youtubemusicplayer.feature_youtube_player.services.YoutubePlayerService
+import com.xeniac.youtubemusicplayer.feature_youtube_player.services.YouTubePlayerService
 
 @Composable
 fun YouTubePlayerScreen(
@@ -88,20 +88,30 @@ fun YouTubePlayerScreen(
         MediaControlButton(
             youTubePlayerState = youTubePlayerState,
             onPlayClick = {
-                Intent(context, YoutubePlayerService::class.java).also {
-                    it.action = YoutubePlayerService.Actions.START.toString()
+                Intent(context, YouTubePlayerService::class.java).also {
+                    it.action = YouTubePlayerService.Actions.START_SERVICE.toString()
+
+                    it.putExtra(
+                        /* name = */ "channelName",
+                        /* value = */ youTubePlayerState.channelName
+                    )
+                    it.putExtra(
+                        /* name = */ "videoTitle",
+                        /* value = */ youTubePlayerState.videoTitle
+                    )
+
                     context.startService(it)
                 }
 
-                youTubePlayerState.youTubePlayer?.play()
+                youTubePlayerState.youtubePlayer?.play()
             },
             onPauseClick = {
-                Intent(context, YoutubePlayerService::class.java).also {
-                    it.action = YoutubePlayerService.Actions.STOP.toString()
+                Intent(context, YouTubePlayerService::class.java).also {
+                    it.action = YouTubePlayerService.Actions.STOP_SERVICE.toString()
                     context.startService(it)
                 }
 
-                youTubePlayerState.youTubePlayer?.pause()
+                youTubePlayerState.youtubePlayer?.pause()
             },
             modifier = Modifier.layoutId("mediaControlBtn")
         )

@@ -43,7 +43,7 @@
         </service>
 
         <service
-            android:name="com.xeniac.youtubemusicplayer.feature_youtube_player.services.YoutubePlayerService"
+            android:name="com.xeniac.youtubemusicplayer.feature_youtube_player.services.YouTubePlayerService"
             android:exported="false"
             android:foregroundServiceType="mediaPlayback" />
 

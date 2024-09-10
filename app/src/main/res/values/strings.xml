@@ -6,8 +6,10 @@
     <string name="notification_youtube_channel_name_service">Player Service</string>
 
 
-    <string name="youtube_player_btn_preparing">Preparing...</string>
+    <string name="youtube_player_btn_preparing">Preparing…</string>
     <string name="youtube_player_btn_play">Play</string>
     <string name="youtube_player_btn_pause">Pause</string>
+    <!--Placeholder is for the youtube video title-->
+    <string name="youtube_player_notification_message">%s is playing…</string>
 
 </resources>

@@ -10,11 +10,11 @@ import com.xeniac.youtubemusicplayer.BaseApplication.Companion.NOTIFICATION_CHAN
 import com.xeniac.youtubemusicplayer.R
 import com.xeniac.youtubemusicplayer.core.presentation.MainActivity
 
-class YoutubePlayerService : Service() {
+class YouTubePlayerService : Service() {
 
     enum class Actions {
-        START,
-        STOP
+        START_SERVICE,
+        STOP_SERVICE
     }
 
     override fun onBind(intent: Intent?): IBinder? = null
@@ -25,26 +25,34 @@ class YoutubePlayerService : Service() {
         startId: Int
     ): Int {
         when (intent?.action) {
-            Actions.START.toString() -> start()
-            Actions.STOP.toString() -> stop()
+            Actions.START_SERVICE.toString() -> {
+                val channelName = intent.getStringExtra("channelName")
+                val videoTitle = intent.getStringExtra("videoTitle")
+
+                start(channelName, videoTitle)
+            }
+            Actions.STOP_SERVICE.toString() -> stop()
         }
 
         return super.onStartCommand(intent, flags, startId)
     }
 
-    private fun start() {
+    private fun start(
+        channelName: String?,
+        videoTitle: String?
+    ) {
         val notification = NotificationCompat.Builder(
             /* context = */ this,
             /* channelId = */ NOTIFICATION_CHANNEL_ID_YOUTUBE_SERVICE
         ).apply {
             val launchMainActivityIntent = Intent(
-                /* packageContext = */ this@YoutubePlayerService,
+                /* packageContext = */ this@YouTubePlayerService,
                 /* cls = */ MainActivity::class.java
             ).apply {
                 flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
             }
             val openAppPendingIntent = PendingIntent.getActivity(
-                /* context = */ this@YoutubePlayerService,
+                /* context = */ this@YouTubePlayerService,
                 /* requestCode = */ 0,
                 /* intent = */ launchMainActivityIntent,
                 /* flags = */ if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
@@ -52,10 +60,18 @@ class YoutubePlayerService : Service() {
             )
 
             setAutoCancel(false)
+            setOngoing(true)
             setContentIntent(openAppPendingIntent)
-            setOngoing(true) // Ongoing notifications cannot be dismissed by the user
             setSmallIcon(R.drawable.ic_notification)
-            setContentTitle("YouTube is playing...")
+            setContentTitle(channelName)
+            videoTitle?.let {
+                setContentText(
+                    getString(
+                        R.string.youtube_player_notification_message,
+                        videoTitle
+                    )
+                )
+            }
 
             /*
             On Android 8.0 and above these values are ignored in favor of the values set on the notification's channel.
