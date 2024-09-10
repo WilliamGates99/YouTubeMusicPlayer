@@ -1,4 +1,4 @@
-package com.xeniac.youtubemusicplayer.core.services
+package com.xeniac.youtubemusicplayer.feature_youtube_player.services
 
 import android.app.PendingIntent
 import android.app.Service

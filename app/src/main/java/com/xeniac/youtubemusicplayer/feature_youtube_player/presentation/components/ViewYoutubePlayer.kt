@@ -1,4 +1,4 @@
-package com.xeniac.youtubemusicplayer.core.presentation.components
+package com.xeniac.youtubemusicplayer.feature_youtube_player.presentation.components
 
 import android.content.Intent
 import androidx.compose.material3.Button
@@ -20,7 +20,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
 import androidx.constraintlayout.compose.Dimension
 import androidx.constraintlayout.compose.Visibility
-import com.xeniac.youtubemusicplayer.core.services.YoutubePlayerService
+import com.xeniac.youtubemusicplayer.feature_youtube_player.services.YoutubePlayerService
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener

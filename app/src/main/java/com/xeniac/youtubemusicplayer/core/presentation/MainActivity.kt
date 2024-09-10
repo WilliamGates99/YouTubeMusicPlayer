@@ -5,15 +5,17 @@ import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.core.app.ActivityCompat
-import com.xeniac.youtubemusicplayer.core.presentation.components.ViewYoutubePlayer
-import com.xeniac.youtubemusicplayer.core.ui.theme.TempYoutubePlayerTheme
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.navigation.compose.rememberNavController
+import com.xeniac.youtubemusicplayer.core.ui.navigation.nav_graph.SetupRootNavGraph
+import com.xeniac.youtubemusicplayer.core.ui.theme.YouTubeMusicPlayerTheme
+import com.xeniac.youtubemusicplayer.core.ui.theme.utils.enableEdgeToEdgeWindow
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -21,7 +23,8 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+        enableEdgeToEdgeWindow()
+        installSplashScreen()
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             ActivityCompat.requestPermissions(
@@ -32,32 +35,22 @@ class MainActivity : ComponentActivity() {
         }
 
         setContent {
-            TempYoutubePlayerTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPaddings ->
-                    ViewYoutubePlayer(
-                        youTubeVideoId = "jfKfPfyJRdk",
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(
-                                start = 16.dp,
-                                end = 16.dp,
-                                top = 16.dp + innerPaddings.calculateTopPadding(),
-                                bottom = 16.dp + innerPaddings.calculateBottomPadding()
-                            )
-                    )
+            YouTubeMusicPlayerRootSurface()
+        }
+    }
 
-                    // KmpYoutubePlayer(
-                    //     youTubeVideoId = "jfKfPfyJRdk",
-                    //     modifier = Modifier
-                    //         .fillMaxSize()
-                    //         .padding(
-                    //             start = 16.dp,
-                    //             end = 16.dp,
-                    //             top = 16.dp + innerPaddings.calculateTopPadding(),
-                    //             bottom = 16.dp + innerPaddings.calculateBottomPadding()
-                    //         )
-                    // )
-                }
+    @Composable
+    private fun YouTubeMusicPlayerRootSurface() {
+        YouTubeMusicPlayerTheme {
+            Surface(
+                modifier = Modifier.fillMaxSize(),
+                color = MaterialTheme.colorScheme.background
+            ) {
+                val rootNavController = rememberNavController()
+
+                SetupRootNavGraph(
+                    rootNavController = rootNavController
+                )
             }
         }
     }
