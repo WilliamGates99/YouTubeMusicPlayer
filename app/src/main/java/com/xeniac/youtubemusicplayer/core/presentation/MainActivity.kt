@@ -25,17 +25,20 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdgeWindow()
         installSplashScreen()
+        requestPostNotificationPermission()
 
+        setContent {
+            YouTubeMusicPlayerRootSurface()
+        }
+    }
+
+    private fun requestPostNotificationPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             ActivityCompat.requestPermissions(
                 /* activity = */ this,
                 /* permissions = */ arrayOf(Manifest.permission.POST_NOTIFICATIONS),
                 /* requestCode = */ 0
             )
-        }
-
-        setContent {
-            YouTubeMusicPlayerRootSurface()
         }
     }
 

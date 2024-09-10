@@ -5,4 +5,9 @@
     <string name="notification_youtube_channel_group_name">YouTube</string>
     <string name="notification_youtube_channel_name_service">Player Service</string>
 
+
+    <string name="youtube_player_btn_preparing">Preparing...</string>
+    <string name="youtube_player_btn_play">Play</string>
+    <string name="youtube_player_btn_pause">Pause</string>
+
 </resources>
