@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Youtube Music Player</string>
+
+
+    <string name="notification_youtube_channel_group_name">YouTube</string>
+    <string name="notification_youtube_channel_name_service">Player Service</string>
+
+</resources>
