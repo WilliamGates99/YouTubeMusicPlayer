@@ -13,9 +13,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
-import javax.inject.Singleton
 
 @HiltViewModel
 class YouTubePlayerViewModel @Inject constructor(
@@ -31,14 +29,6 @@ class YouTubePlayerViewModel @Inject constructor(
             videoTitle = "lofi hip hop radio \uD83D\uDCDA beats to relax/study to",
             channelName = "Lofi Girl"
         )
-
-        Timber.i("init") // TODO: TEMP
-    }
-
-    // TODO: TEMP
-    override fun onCleared() {
-        super.onCleared()
-        Timber.e("onCleared")
     }
 
     fun onAction(action: YouTubePlayerAction) {
