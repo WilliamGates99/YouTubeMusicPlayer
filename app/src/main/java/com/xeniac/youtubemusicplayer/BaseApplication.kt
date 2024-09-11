@@ -61,7 +61,6 @@ class BaseApplication : Application() {
             group = NOTIFICATION_CHANNEL_GROUP_ID_YOUTUBE
             lockscreenVisibility = Notification.VISIBILITY_PUBLIC
             enableLights(false)
-            setShowBadge(false)
         }
 
         notificationManager.createNotificationChannel(channel)
