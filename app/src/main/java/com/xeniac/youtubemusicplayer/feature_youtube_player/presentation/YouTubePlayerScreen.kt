@@ -1,14 +1,11 @@
 package com.xeniac.youtubemusicplayer.feature_youtube_player.presentation
 
-import android.content.Intent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.layoutId
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
@@ -19,15 +16,11 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.xeniac.youtubemusicplayer.feature_youtube_player.presentation.components.ErrorMessage
 import com.xeniac.youtubemusicplayer.feature_youtube_player.presentation.components.MediaControlButton
 import com.xeniac.youtubemusicplayer.feature_youtube_player.presentation.components.YoutubePlayerAndroidView
-import com.xeniac.youtubemusicplayer.feature_youtube_player.services.YouTubePlayerService
 
 @Composable
 fun YouTubePlayerScreen(
     viewModel: YouTubePlayerViewModel = hiltViewModel()
 ) {
-    val context = LocalContext.current
-    val scope = rememberCoroutineScope()
-
     val youTubePlayerState by viewModel.youTubePlayerState.collectAsStateWithLifecycle()
 
     val constraintSet = ConstraintSet {
@@ -59,7 +52,7 @@ fun YouTubePlayerScreen(
         constrain(errorMessage) {
             start.linkTo(anchor = parent.start, margin = 32.dp)
             end.linkTo(anchor = parent.end, margin = 32.dp)
-            top.linkTo(anchor = mediaControlBtn.bottom, margin = 32.dp)
+            top.linkTo(anchor = mediaControlBtn.bottom, margin = 44.dp)
 
             val hasError = youTubePlayerState.errorMessage != null
             visibility = if (hasError) Visibility.Visible else Visibility.Gone
@@ -73,45 +66,43 @@ fun YouTubePlayerScreen(
             .padding(all = 16.dp)
     ) {
         YoutubePlayerAndroidView(
-            initializeYouTubePlayer = viewModel::initializeYouTubePlayer,
-            onPlayerStateCued = viewModel::updatePlayerStateToCued,
-            onPlayerStateUnstarted = viewModel::updatePlayerStateToUnstarted,
-            onPlayerStateBuffering = viewModel::updatePlayerStateToBuffering,
-            onPlayerStatePlaying = viewModel::updatePlayerStateToPlaying,
-            onPlayerStatePaused = viewModel::updatePlayerStateToPaused,
-            onPlayerStateEnded = viewModel::updatePlayerStateToEnded,
-            onPlayerStateUnknown = viewModel::updatePlayerStateToUnknown,
-            onError = viewModel::showErrorMessage,
+            initializeYouTubePlayer = { player ->
+                viewModel.onAction(YouTubePlayerAction.InitializeYouTubePlayer(player))
+            },
+            onPlayerStateCued = {
+                viewModel.onAction(YouTubePlayerAction.UpdatePlayerStateToCued)
+            },
+            onPlayerStateUnstarted = {
+                viewModel.onAction(YouTubePlayerAction.UpdatePlayerStateToUnstarted)
+            },
+            onPlayerStateBuffering = {
+                viewModel.onAction(YouTubePlayerAction.UpdatePlayerStateToBuffering)
+            },
+            onPlayerStatePlaying = {
+                viewModel.onAction(YouTubePlayerAction.UpdatePlayerStateToPlaying)
+            },
+            onPlayerStatePaused = {
+                viewModel.onAction(YouTubePlayerAction.UpdatePlayerStateToPaused)
+            },
+            onPlayerStateEnded = {
+                viewModel.onAction(YouTubePlayerAction.UpdatePlayerStateToEnded)
+            },
+            onPlayerStateUnknown = {
+                viewModel.onAction(YouTubePlayerAction.UpdatePlayerStateToUnknown)
+            },
+            onError = { message ->
+                viewModel.onAction(YouTubePlayerAction.ShowErrorMessage(message))
+            },
             modifier = Modifier.layoutId("youTubePlayer")
         )
 
         MediaControlButton(
             youTubePlayerState = youTubePlayerState,
             onPlayClick = {
-                Intent(context, YouTubePlayerService::class.java).also {
-                    it.action = YouTubePlayerService.Actions.START_SERVICE.toString()
-
-                    it.putExtra(
-                        /* name = */ "channelName",
-                        /* value = */ youTubePlayerState.channelName
-                    )
-                    it.putExtra(
-                        /* name = */ "videoTitle",
-                        /* value = */ youTubePlayerState.videoTitle
-                    )
-
-                    context.startService(it)
-                }
-
-                youTubePlayerState.youtubePlayer?.play()
+                viewModel.onAction(YouTubePlayerAction.PlayVideo)
             },
             onPauseClick = {
-                Intent(context, YouTubePlayerService::class.java).also {
-                    it.action = YouTubePlayerService.Actions.STOP_SERVICE.toString()
-                    context.startService(it)
-                }
-
-                youTubePlayerState.youtubePlayer?.pause()
+                viewModel.onAction(YouTubePlayerAction.PauseVideo)
             },
             modifier = Modifier.layoutId("mediaControlBtn")
         )

@@ -20,8 +20,8 @@ fun ErrorMessage(
         id = R.string.youtube_player_error_message,
         message ?: ""
     ),
-    fontSize: TextUnit = 24.sp,
-    lineHeight: TextUnit = 24.sp,
+    fontSize: TextUnit = 16.sp,
+    lineHeight: TextUnit = 32.sp,
     fontWeight: FontWeight = FontWeight.Bold,
     textAlign: TextAlign = TextAlign.Center,
     color: Color = MaterialTheme.colorScheme.error
