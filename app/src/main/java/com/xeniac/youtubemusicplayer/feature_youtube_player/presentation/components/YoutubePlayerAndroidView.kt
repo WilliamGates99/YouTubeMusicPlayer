@@ -60,6 +60,9 @@ fun YoutubePlayerAndroidView(
                 })
             }
         },
+        onRelease = { playerView ->
+            playerView.release()
+        },
         modifier = modifier
     )
 }
