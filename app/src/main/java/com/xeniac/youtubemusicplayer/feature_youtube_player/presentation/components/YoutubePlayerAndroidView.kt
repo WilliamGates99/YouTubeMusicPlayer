@@ -12,6 +12,7 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTube
 fun YoutubePlayerAndroidView(
     modifier: Modifier = Modifier,
     initializeYouTubePlayer: (player: YouTubePlayer) -> Unit,
+    isBackgroundPlaybackEnabled: Boolean = true,
     onPlayerStateCued: () -> Unit,
     onPlayerStateUnstarted: () -> Unit,
     onPlayerStateBuffering: () -> Unit,
@@ -24,7 +25,7 @@ fun YoutubePlayerAndroidView(
     AndroidView(
         factory = { context ->
             YouTubePlayerView(context).apply {
-                enableBackgroundPlayback(true)
+                enableBackgroundPlayback(isBackgroundPlaybackEnabled)
 
                 addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
                     override fun onReady(youTubePlayer: YouTubePlayer) {
@@ -58,9 +59,6 @@ fun YoutubePlayerAndroidView(
                     }
                 })
             }
-        },
-        onRelease = { player ->
-            player.release()
         },
         modifier = modifier
     )
