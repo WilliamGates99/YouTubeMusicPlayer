@@ -9,7 +9,6 @@ import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
-import androidx.constraintlayout.compose.Dimension
 import androidx.constraintlayout.compose.Visibility
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -44,9 +43,6 @@ fun YouTubePlayerScreen(
 
             horizontalChainWeight = 0.5f
             verticalChainWeight = 0.5f
-
-            width = Dimension.value(150.dp)
-            height = Dimension.value(150.dp)
         }
 
         constrain(errorMessage) {
