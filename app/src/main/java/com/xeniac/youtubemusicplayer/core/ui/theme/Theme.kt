@@ -90,7 +90,7 @@ private val DarkColorScheme = darkColorScheme(
 @Composable
 fun YouTubeMusicPlayerTheme(
     isDarkTheme: Boolean = isSystemInDarkTheme(),
-    dynamicColor: Boolean = true, // Dynamic color is available on Android 12+
+    dynamicColor: Boolean = false, // Dynamic color is available on Android 12+
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {
