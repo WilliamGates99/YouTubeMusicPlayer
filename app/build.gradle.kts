@@ -66,7 +66,7 @@ android {
             resValue(
                 type = "color",
                 name = "appIconBackground",
-                value = "#FF182118" // Dark Green
+                value = "#FF0E0E0E" // Dark Gray
             )
         }
     }
