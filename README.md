@@ -1,5 +1,5 @@
 # YouTube Music Player
-![platform](https://img.shields.io/badge/platform-android-success)&nbsp;![GitHub release (latest by date)](https://img.shields.io/github/v/release/WilliamGates99/YouTubeMusicPlayer)&nbsp;![GitHub](https://img.shields.io/github/license/WilliamGates99/YouTubeMusicPlayer)
+![platform](https://img.shields.io/badge/platform-android-success)&nbsp;![GitHub release (latest by date)](https://img.shields.io/github/v/release/WilliamGates99/YouTubeMusicPlayer)&nbsp;![GitHub License](https://img.shields.io/github/license/WilliamGates99/YouTubeMusicPlayer)
 
 ## Description
 **YouTube Music Player** is a demo project that plays **YouTube** videos, music, and live streams while the app is in the background.
